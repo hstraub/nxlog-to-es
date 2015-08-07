@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 
 class Parser extends Actor with ActorLogging {
   
-  val es = context.actorSelection( "akka://NxlogToEs/user/SimpleSender")
+  val es = context.actorSelection( "akka://NxlogToEs/user/BulkSender")
   
   val transformEventReceivedTime = ( __  ).json.pickBranch(
       ( __ \ 'EventReceivedTime ).json.update(
@@ -41,7 +41,6 @@ class Parser extends Actor with ActorLogging {
       val result = json.transform( transformer )
       result match {
         case JsSuccess( obj, path ) =>
-          println( Json.stringify( obj ) )
           es ! obj
           
         case JsError( errors ) =>

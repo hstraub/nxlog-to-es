@@ -14,7 +14,6 @@ class SimpleSender extends Actor with ActorLogging {
             .method( "POST" )
             .postData( jsonString )
             .asString
-          println( esResp.statusLine )
       
   }
   
